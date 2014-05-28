@@ -31,7 +31,6 @@ angular.module('weatherGuess.directives', [])
         if (angular.isDefined(value)) {
           $scope.currentTemperature = value;
           $scope.currentY = calculatePositionFromTemperature(value);
-          console.debug("$scope.currentY", $scope.currentY)
           $scope.animation = "bounceInDown";
         }
       }, true);
