@@ -5,8 +5,12 @@ angular.module('weatherGuess.filters', [])
     if (typeof number === 'undefined' || number === null) {
       return '';
     } else {
-      var matches = String(number).match(/^(-?\d+\.\d).*/);
-      return "" + matches[1];
+    var matches = String(number).match(/^(-?\d+\.\d).*/);
+      if (matches) {
+        return "" + matches[1];
+      } else {
+        return "";
+      }
     }
   };
 });

@@ -56,7 +56,6 @@ angular.module('weatherGuess.controllers', [])
     if (index > rating.length - 1) {
       index = rating.length - 1;
     }
-    console.debug(index)
     return rating[index];
   }
 
