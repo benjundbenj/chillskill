@@ -32,6 +32,17 @@ angular.module('weatherGuess.controllers', [])
     $scope.checkSkill = false;
     $scope.rating = chooseRating($scope.guessedTemperature, $scope.currentTemperature);
   }
+
+  reset = $scope.reset = function () {
+    $scope.currentTemperature = null;
+    $scope.rateSkill = false;
+    $scope.checkSkill = false;
+    $scope.rating = null;
+    $scope.showGuess = false;
+    $scope.guessedTemperature = null;
+    $scope.forecast = null;
+    Weather.getForecast(BUXTEHUDE.latitude, BUXTEHUDE.longitude).then(gotForecast, gotForecastFailed);
+  }
   
   function chooseRating(guessed, apparent) {
     console.debug(guessed, apparent)
