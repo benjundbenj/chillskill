@@ -19,6 +19,7 @@ angular.module('weatherGuess.directives', [])
             + '<div class="temperature-button temperature-indicator" style="top: {{y}}px">{{temperature | round}}°</div>'
             + '</div>',
     link: function ($scope, $element, $attributes) {
+      var dragModifier = 0.8;
 
       var guessedTemperatureWatch = $scope.$watch('temperature', function (value) {
         if (angular.isDefined(value)) {
@@ -68,12 +69,12 @@ angular.module('weatherGuess.directives', [])
 
       function drag(event) {
         var offset  = $($element).offset().top,
-            y       = Math.floor(event.gesture.center.pageY) - offset,
+            y       = startPosition + Math.floor(event.gesture.deltaY * dragModifier),
             cappedY = capY(y, offset);
 
         $scope.$apply(function () {
           $scope.temperature = calculateTemperature(cappedY);
-          $scope.y           = y;
+          $scope.y           = cappedY;
         });
       }
 
@@ -82,13 +83,14 @@ angular.module('weatherGuess.directives', [])
       }
 
       function dragstart(event) {
+        startPosition = $button.offset().top;
         $scope.$emit("temperature-slider.dragstart", event);
       }
 
       var $button = $('.temperature-button');
-      $ionicGesture.on("dragstart", dragstart, $button);
-      $ionicGesture.on("drag", drag, $button);
-      $ionicGesture.on("dragend", dragend, $button);
+      $ionicGesture.on("dragstart", dragstart, $element);
+      $ionicGesture.on("drag", drag, $element);
+      $ionicGesture.on("dragend", dragend, $element);
     }
   };
 });
