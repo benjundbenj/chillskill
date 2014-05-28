@@ -44,7 +44,9 @@ angular.module('weatherGuess.directives', [])
       }
 
       function calculatePositionFromTemperature(degrees) {
-        var height = $($element).height(),
+        $container = $($element);
+        var height = $container.height(),
+            offset = $container.offset().top
             pixelsPerDegree = height / ($scope.range * 2);
         y = Number(degrees) * pixelsPerDegree;
 

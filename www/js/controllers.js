@@ -13,6 +13,7 @@ angular.module('weatherGuess.controllers', [])
   function guessFinished(event) {
     $scope.$apply(function () {
       $scope.showGuess = true;
+      $scope.checkSkill = true;
     });
   }
 
@@ -27,6 +28,25 @@ angular.module('weatherGuess.controllers', [])
 
   $scope.showResults = function () {
     $scope.currentTemperature = $scope.forecast.apparentTemperature;
+    $scope.rateSkill = true;
+    $scope.checkSkill = false;
+    $scope.rating = chooseRating($scope.guessedTemperature, $scope.currentTemperature);
+  }
+  
+  function chooseRating(guessed, apparent) {
+    console.debug(guessed, apparent)
+    index = Math.abs(guessed - apparent);
+    rating = [
+      "Sehr gut.",
+      "Nah dran dude!",
+      "Geht so.",
+      "Nein, nein, so geht das wirklich nicht..."
+    ]
+    if (index > rating.length - 1) {
+      index = rating.length - 1;
+    }
+    console.debug(index)
+    return rating[index];
   }
 
   function gotForecast(forecast) {

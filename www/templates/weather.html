@@ -1,14 +1,19 @@
 <ion-content scroll="false">
 
+<weather-slider temperature="guessedTemperature" current-temperature="currentTemperature" range="10"></weather-slider>
+
 <div ng-show="showGuess" class="guess">
-  <p>So, you feel like it's {{guessedTemperature | round}}°?!</p>
-  <button class="button button-positive" ng-click="showResults()">
-    let's check your chill skill!
-  </button>
+  <div class="check-skill" ng-show="checkSkill">
+    <p>So, you feel like it's {{guessedTemperature | round}}°?!</p>
+    <button class="button button-positive" ng-click="showResults()">
+      let's check your chill skill!
+    </button>
+  </div>
+  <div ng-show="rateSkill" class="guess">
+    <p>{{rating}}</p>
+  </div>
 </div>
 
-
-<weather-slider temperature="guessedTemperature" current-temperature="currentTemperature" range="10"></weather-slider>
 
 <!-- powered by <a href="http://forecast.io/">forecast.io</a> -->
 </ion-content>
