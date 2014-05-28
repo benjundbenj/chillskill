@@ -33,10 +33,3 @@ angular.module('weatherGuess', [
   })
   $urlRouterProvider.otherwise('/weather');
 });
-
-window.weather = {
-  get: function(name) {
-    injector = angular.element($('[ng-app]')).injector()
-    return injector.get(name);
-  }
-}

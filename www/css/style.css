@@ -2,22 +2,42 @@
 
 .temperature-slider {
   position: relative;
+  z-index: 1000;
   height: 80%;
   display: block;
+}
+
+.temperature-indicator {
+  left: 50%;
+  margin-left: -120px;
+  padding: 10px;
+  width: 220px;
+  text-align: center;
+  font-size: 80px;
 }
 
 .temperature-button {
   position: absolute;
   top: 50%;
-  left: 50%;
-  margin-left: -100px;
-  padding: 10px;
-  width: 200px;
-  text-align: center;
-  font-size: 80px;
 }
 
 .temperature-label {
   position: absolute;
   margin-top: 10px;
+}
+
+
+.current-temperature {
+  position: absolute;
+  top: 0;
+  left: 50%;
+}
+
+.guess {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  width: 250px;
+  margin-left: -125px;
+  z-index: 1001;
 }
