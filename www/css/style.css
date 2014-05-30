@@ -5,7 +5,9 @@
   background: #222 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEklEQVQIHWNgYGD4D8TEAewqAVXuAf+yw+rnAAAAAElFTkSuQmCC);
   color: #fff;
 }
-
+.ionic-scroll{
+  border-left: 3px dotted #C0392B;
+}
 
 .temperature-slider {
   position: relative;
@@ -17,7 +19,7 @@
 .temperature-indicator {
   font-family: 'Open Sans Condensed', sans-serif;
   left: 50%;
-  margin-left: -120px;
+  margin-left: -100px;
   padding: 10px;
   width: 220px;
   text-align: center;
@@ -62,32 +64,10 @@
   width: 70%;
   margin-left: -35%;
   z-index: 1001;
-	background: rgba(128,128,128,0.2);
-	border: 4px solid #111;
-	padding: 10px;
-	text-align: center;
-	font-size: 150%;
-	line-height: 200%;
-}
-.rating-bubble:after, .rating-bubble:before {
-	top: 100%;
-	left: 50%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-}
-
-.rating-bubble:after {
-	border-color: rgba(0, 0, 0, 0);
-	border-width: 10px;
-	margin-left: -10px;
-}
-.rating-bubble:before {
-	border-color: rgba(0, 0, 0, 0);
-	border-top-color: #111;
-	border-width: 16px;
-	margin-left: -16px;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid #111;
+  padding: 10px;
+  text-align: center;
+  font-size: 150%;
+  line-height: 200%;
 }
