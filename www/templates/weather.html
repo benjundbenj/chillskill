@@ -3,15 +3,15 @@
 <weather-slider temperature="guessedTemperature" current-temperature="currentTemperature" range="10"></weather-slider>
 
 <div ng-show="showGuess" class="guess">
-  <div class="check-skill" ng-show="checkSkill">
+  <div class="rating-bubble" ng-show="checkSkill">
     <p>So, you feel like it's {{guessedTemperature | round}}°?!</p>
-    <button class="button button-positive" ng-click="showResults()">
+    <button class="button button-positive button-small" ng-click="showResults()">
       let's check your chill skill!
     </button>
   </div>
-  <div ng-show="rateSkill" class="guess">
+  <div ng-show="rateSkill" class="rating-bubble">
     <p>{{rating}}</p>
-    <button class="button button-balanced" ng-click="reset()">
+    <button class="button button-balanced button-small" ng-click="reset()">
       ok!
     </button>
   </div>
