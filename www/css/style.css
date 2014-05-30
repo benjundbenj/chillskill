@@ -1,5 +1,12 @@
 /* Empty. Add your own CSS if you like */
 
+/*SCHRITT 1*/
+.pane{
+  background: #222 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEklEQVQIHWNgYGD4D8TEAewqAVXuAf+yw+rnAAAAAElFTkSuQmCC);
+  color: #fff;
+}
+
+
 .temperature-slider {
   position: relative;
   z-index: 1000;
@@ -8,12 +15,13 @@
 }
 
 .temperature-indicator {
+  font-family: 'Open Sans Condensed', sans-serif;
   left: 50%;
   margin-left: -120px;
   padding: 10px;
   width: 220px;
   text-align: center;
-  font-size: 80px;
+  font-size: 92px;
 }
 
 .temperature-button {
@@ -24,6 +32,17 @@
 .temperature-label {
   position: absolute;
   margin-top: 10px;
+  padding: 3px;
+  left: 5px;
+  font-weight: bold;
+}
+
+.temperature-label:before{
+  content: "–";
+  position: absolute;
+  left: -20%;
+  color: #C0392B;
+  font-weight: bold;
 }
 
 
