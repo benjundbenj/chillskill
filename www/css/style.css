@@ -21,7 +21,7 @@
   left: 50%;
   margin-left: -100px;
   padding: 10px;
-  width: 220px;
+  width: 240px;
   text-align: center;
   font-size: 92px;
 }
@@ -46,7 +46,6 @@
   color: #C0392B;
   font-weight: bold;
 }
-
 
 .current-temperature {
   position: absolute;
