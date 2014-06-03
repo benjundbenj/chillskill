@@ -1,6 +1,6 @@
 angular.module('weatherGuess.factories', [])
 
-.factory("WeatherFactory", function ($q,$timeout) {
+.factory("WeatherFactory", function ($q,$timeout,$http,LocationFactory) {
   // https://api.forecast.io/forecast/72378dafb149e2a5fe80c91f3a3b6eef/53.4772,9.7031?units=si&exclude=minutely,hourly,daily,flags
 
   var forecastApiKey = '72378dafb149e2a5fe80c91f3a3b6eef';
@@ -29,14 +29,30 @@ angular.module('weatherGuess.factories', [])
     }
   }
 
+  var forecastURI = function (apiKey, latitude, longitude) {
+    var a = "https://api.forecast.io/forecast/"
+            + forecastApiKey
+            + "/"
+            + latitude
+            + ","
+            + longitude
+            + "?units=si&exclude=minutely,hourly,daily,flags";
+    console.error(a)
+    return a;
+  }
+
   return function () {
     exports = {}
 
-    exports.getForecastForMyPosition = function (latitude, longitude) {
-      getForecastDeferred = $q.defer();
-      $timeout(function () {
-        getForecastDeferred.resolve(response.currently);
-      }, 500)
+    exports.getForecastForMyPosition = function () {
+      var getForecastDeferred = $q.defer();
+      var location = new LocationFactory();
+      location.getCurrentLocation().then(function (position) {
+        var uri = forecastURI(forecastApiKey, position.latitude, position.longitude);
+        $http.get(uri).success(function (data) {
+          getForecastDeferred.resolve(data.currently);
+        });
+      });
       return getForecastDeferred.promise;
     }
 
@@ -44,3 +60,25 @@ angular.module('weatherGuess.factories', [])
   }
 
 })
+
+.factory("LocationFactory", function ($q,$window) {
+
+  var getCurrentLocation = function () {
+    var deferred = $q.defer();
+    $window.navigator.geolocation.getCurrentPosition(function (position) {
+      console.debug(position)
+      deferred.resolve(position.coords);
+    });
+    return deferred.promise;
+  }
+
+  return function () {
+
+    var exports = {
+      getCurrentLocation: getCurrentLocation
+    };
+
+    return exports;
+  }
+
+});

@@ -1,6 +1,6 @@
 angular.module('weatherGuess.controllers', [])
 
-.controller('WeatherController', function ($scope, WeatherFactory) {
+.controller('WeatherController', function ($scope, WeatherFactory,$ionicPlatform) {
   $scope.slideFinished = false;
 
   Weather = new WeatherFactory();
@@ -55,13 +55,15 @@ angular.module('weatherGuess.controllers', [])
 
   function gotForecast(forecast) {
     $scope.forecast = forecast;
-    $scope.guessedTemperature = 15.5;// angular.copy(forecast.temperature);
+    $scope.guessedTemperature = angular.copy(forecast.temperature);
   }
 
   function gotForecastFailed(error) {
     console.error(error);
   }
 
-  Weather.getForecastForMyPosition().then(gotForecast, gotForecastFailed);
+  $ionicPlatform.ready(function() {
+    Weather.getForecastForMyPosition().then(gotForecast, gotForecastFailed);
+  });
 
 });
