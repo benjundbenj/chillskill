@@ -32,7 +32,7 @@ angular.module('weatherGuess.factories', [])
   return function () {
     exports = {}
 
-    exports.getForecast = function (latitude, longitude) {
+    exports.getForecastForMyPosition = function (latitude, longitude) {
       getForecastDeferred = $q.defer();
       $timeout(function () {
         getForecastDeferred.resolve(response.currently);

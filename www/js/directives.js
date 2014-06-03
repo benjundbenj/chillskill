@@ -5,23 +5,23 @@ angular.module('weatherGuess.directives', [])
     replace: true,
     restrict: 'E',
     scope: {
-      temperature: "=",
-      range: '=',
+      guessedTemperature: "=",
+      scaleRange: '=',
       currentTemperature: '='
     },
     template: '<div class="temperature-slider">'
             + '<div class="current-temperature temperature-indicator animated {{animation}}" ng-show="currentTemperature" style="top: {{currentY}}px;">{{currentTemperature | round}}°</div>'
-            + '<div class="temperature-label" style="top: 0%">{{startTemperature - range | round}}°</div>'
-            + '<div class="temperature-label" style="top: 25%">{{startTemperature - range * 0.5 | round}}°</div>'
+            + '<div class="temperature-label" style="top: 100%">{{startTemperature - scaleRange | round}}°</div>'
+            + '<div class="temperature-label" style="top: 75%">{{startTemperature - scaleRange * 0.5 | round}}°</div>'
             + '<div class="temperature-label" style="top: 50%">{{startTemperature | round}}°</div>'
-            + '<div class="temperature-label" style="top: 75%">{{startTemperature + range * 0.5 | round}}°</div>'
-            + '<div class="temperature-label" style="top: 100%">{{startTemperature + range | round}}°</div>'
-            + '<div class="temperature-button temperature-indicator" style="top: {{y}}px">{{temperature | round}}°</div>'
+            + '<div class="temperature-label" style="top: 25%">{{startTemperature + scaleRange * 0.5 | round}}°</div>'
+            + '<div class="temperature-label" style="top: 0%">{{startTemperature + scaleRange | round}}°</div>'
+            + '<div class="temperature-button temperature-indicator" style="top: {{y}}px">{{guessedTemperature | round}}°</div>'
             + '</div>',
     link: function ($scope, $element, $attributes) {
       var dragModifier = 0.8;
 
-      var guessedTemperatureWatch = $scope.$watch('temperature', function (value) {
+      var guessedTemperatureWatch = $scope.$watch('guessedTemperature', function (value) {
         if (angular.isDefined(value)) {
           $scope.startTemperature = value;
           guessedTemperatureWatch();
@@ -30,26 +30,25 @@ angular.module('weatherGuess.directives', [])
 
       $scope.$watch('currentTemperature', function (value) {
         if (angular.isDefined(value)) {
-          $scope.currentTemperature = value;
-          $scope.currentY = calculatePositionFromTemperature(value);
+          $scope.currentY = calculatePositionFromTemperature(value, $scope.scaleRange, $scope.startTemperature);
           $scope.animation = "bounceInDown";
         }
       }, true);
 
-      function calculateTemperature(y) {
+      function calculateTemperature(y, scaleRange, startTemperature) {
         var height = $($element).height(),
-            pixelsPerDegree = height / ($scope.range * 2);
-        degrees = y / pixelsPerDegree - $scope.range + $scope.startTemperature;
+            pixelsPerDegree = height / (scaleRange * 2);
+        degrees = (y / pixelsPerDegree - scaleRange - startTemperature) * -1;
 
         return degrees;
       }
 
-      function calculatePositionFromTemperature(degrees) {
+      function calculatePositionFromTemperature(degrees, scaleRange, startTemperature) {
         $container = $($element);
         var height = $container.height(),
             offset = $container.offset().top
-            pixelsPerDegree = height / ($scope.range * 2);
-        y = (Number(degrees) + $scope.range - $scope.startTemperature) * pixelsPerDegree;
+            pixelsPerDegree = height / (scaleRange * 2);
+        y = height - (Number(degrees) + scaleRange - startTemperature) * pixelsPerDegree;
 
         return y;
       }
@@ -73,7 +72,7 @@ angular.module('weatherGuess.directives', [])
             cappedY = capY(y, offset);
 
         $scope.$apply(function () {
-          $scope.temperature = calculateTemperature(cappedY);
+          $scope.guessedTemperature = calculateTemperature(cappedY, $scope.scaleRange, $scope.startTemperature);
           $scope.y           = cappedY;
         });
       }

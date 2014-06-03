@@ -1,36 +1,31 @@
 angular.module('weatherGuess.controllers', [])
 
 .controller('WeatherController', function ($scope, WeatherFactory) {
-  $scope.showGuess = false;
+  $scope.slideFinished = false;
 
   Weather = new WeatherFactory();
 
-  var BUXTEHUDE = {
-    latitude: 53.4772,
-    longitude: 9.7031
-  }
-
-  function guessFinished(event) {
+  function slideFinished(event) {
     $scope.$apply(function () {
-      $scope.showGuess = true;
+      $scope.slideFinished = true;
       $scope.checkSkill = true;
     });
   }
 
-  function hideGuess(event) {
+  function slideStarted(event) {
     $scope.$apply(function () {
-      $scope.showGuess = false;
+      $scope.slideFinished = false;
     });
   }
 
-  $scope.$on("temperature-slider.dragend", guessFinished);
-  $scope.$on("temperature-slider.dragstart", hideGuess);
+  $scope.$on("temperature-slider.dragend", slideFinished);
+  $scope.$on("temperature-slider.dragstart", slideStarted);
 
-  $scope.showResults = function () {
+  $scope.showResults = function (guessedTemperature) {
     $scope.currentTemperature = $scope.forecast.apparentTemperature;
     $scope.rateSkill = true;
     $scope.checkSkill = false;
-    $scope.rating = chooseRating($scope.guessedTemperature, $scope.currentTemperature);
+    $scope.rating = chooseRating(guessedTemperature, $scope.currentTemperature);
   }
 
   reset = $scope.reset = function () {
@@ -38,15 +33,14 @@ angular.module('weatherGuess.controllers', [])
     $scope.rateSkill = false;
     $scope.checkSkill = false;
     $scope.rating = null;
-    $scope.showGuess = false;
+    $scope.slideFinished = false;
     $scope.guessedTemperature = null;
     $scope.forecast = null;
-    Weather.getForecast(BUXTEHUDE.latitude, BUXTEHUDE.longitude).then(gotForecast, gotForecastFailed);
+    Weather.getForecastForMyPosition().then(gotForecast, gotForecastFailed);
   }
   
   function chooseRating(guessed, apparent) {
-    console.debug(guessed, apparent)
-    index = Math.abs(guessed - apparent);
+    index = Math.abs(Math.ceil(guessed - apparent));
     rating = [
       "Sehr gut.",
       "Nah dran dude!",
@@ -61,13 +55,13 @@ angular.module('weatherGuess.controllers', [])
 
   function gotForecast(forecast) {
     $scope.forecast = forecast;
-    $scope.guessedTemperature = forecast.temperature;
+    $scope.guessedTemperature = 15.5;// angular.copy(forecast.temperature);
   }
 
   function gotForecastFailed(error) {
     console.error(error);
   }
 
-  Weather.getForecast(BUXTEHUDE.latitude, BUXTEHUDE.longitude).then(gotForecast, gotForecastFailed);
+  Weather.getForecastForMyPosition().then(gotForecast, gotForecastFailed);
 
 });
