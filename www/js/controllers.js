@@ -58,12 +58,8 @@ angular.module('weatherGuess.controllers', [])
     $scope.guessedTemperature = angular.copy(forecast.temperature);
   }
 
-  function gotForecastFailed(error) {
-    console.error(error);
-  }
-
   $ionicPlatform.ready(function() {
-    Weather.getForecastForMyPosition().then(gotForecast, gotForecastFailed);
+    Weather.getForecastForMyPosition().then(gotForecast);
   });
 
 });
