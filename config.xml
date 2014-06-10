@@ -9,6 +9,8 @@
     </author>
     <content src="index.html" />
     <access origin="https://api.forecast.io" />
+    <access origin="http://fonts.googleapis.com" />
+    <access origin="http://themes.googleusercontent.com" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
